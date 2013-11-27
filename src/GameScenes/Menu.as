@@ -7,7 +7,7 @@ package GameScenes
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	
-	import Romaniv_Main;
+//	import Romaniv_Main;
 	
 	//	import gameObjects.Romaniv;
 	
@@ -17,8 +17,10 @@ package GameScenes
 		private var Obj:DisplayObject;
 		private var h:int;	//screenheight 
 		private var w:int;	//screenWidth 
-		private var margin:int;	//Value between a button and edges
+		private var margin:int;	//Value between a btn and edges
 		private var urlReq:URLRequest;
+		private var readyToRun:Boolean = false;
+		private var itemIsAdded:Boolean = false;
 		
 
 		//images////	
@@ -27,13 +29,13 @@ package GameScenes
 		private var title_logo:Loader = new Loader();
 
 		
-		//buttons
-		private var button_run:Loader = new Loader();
-		private var button_record:Loader = new Loader();
-		private var button_tweet:Loader = new Loader();
-		private var button_postFB:Loader = new Loader();
-		private var button_option:Loader = new Loader();
-		private var button_sounds:Loader = new Loader();
+		//btns
+		private var btn_run:Loader = new Loader();
+		private var btn_record:Loader = new Loader();
+		private var btn_tweet:Loader = new Loader();
+		private var btn_postFB:Loader = new Loader();
+		private var btn_option:Loader = new Loader();
+		private var btn_sounds:Loader = new Loader();
 		private const LOGO_POS_Y:int = 50;
 		private const RUN_BUTTON_POS_Y:int = 150;
 		private const BUTTONS_POS_Y:int = 300;
@@ -44,96 +46,135 @@ package GameScenes
 		
 		public function Menu(w:int, h:int, Obj:DisplayObject)
 		{
+
 //			super();
 			// autoOrients をサポート
 			this.Obj = Obj;
 			this.w = w;
 			this.h = h;
-
-			init();
-		}
-		
-		public function load():void{
-			
-		}
-		
-		private function init():void{
-			trace("Menu.init()");
-
 			//about system
-//			h = stage.fullScreenHeight;
-//			w = stage.fullScreenWidth;
-//			margin = stage.fullScreenHeight * 0.01;
-			
 
 			//about visuals////
 			
 			//title_logo
 			urlReq = new URLRequest("images/title_logo.png");
 			title_logo.load(urlReq);
-			title_logo.x = 100;
-			title_logo.y = LOGO_POS_Y;;			
+			title_logo.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				title_logo.width = w * 0.7;
+			});
+			title_logo.x = w * 0.15;
+			title_logo.y = LOGO_POS_Y;		
 					
 			
-			//run button
-			urlReq = new URLRequest("images/button_run.png");
-			button_run.load(urlReq);
-			button_run.x = 120;
-			button_run.y = RUN_BUTTON_POS_Y;	
+			//run btn
+			urlReq = new URLRequest("images/btn_run.png");
+			btn_run.load(urlReq);
+			btn_run.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_run.width = w * 0.7;
+				btn_run.height = h * 0.25;
+
+			});
+			btn_run.x = w * 0.15;
+			btn_run.y = RUN_BUTTON_POS_Y;	
 			
-			//record button
-			urlReq = new URLRequest("images/button_record.png");
-			button_record.load(urlReq);
-			button_record.x = 120;
-			button_record.y = BUTTONS_POS_Y;
-//			button_record.scaleX = 1.2;
+			//record btn
+			urlReq = new URLRequest("images/btn_rnk.png");
+			btn_record.load(urlReq);
+			btn_record.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_record.width = w * 0.12;
+				btn_record.height = h * 0.2;
+
+			});
+			btn_record.x = w * 0.15;
+			btn_record.y = BUTTONS_POS_Y;
+//			btn_record.scaleX = 1.2;
 			
-			//tweet button
-			urlReq = new URLRequest("images/button_tweet.png");
-			button_tweet.load(urlReq);
-			button_tweet.x = 220;
-			button_tweet.y = BUTTONS_POS_Y;	
+			//tweet btn
+			urlReq = new URLRequest("images/btn_tw.png");
+			btn_tweet.load(urlReq);
+			btn_tweet.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_tweet.width = w * 0.12;
+				btn_tweet.height = h * 0.2;
+			});
+			btn_tweet.x = w * 0.30;
+			btn_tweet.y = BUTTONS_POS_Y;	
 			
-			//postFB button
-			urlReq = new URLRequest("images/button_postFB.png");
-			button_postFB.load(urlReq);
-			button_postFB.x = 320;
-			button_postFB.y = BUTTONS_POS_Y;	
+			//postFB btn
+			urlReq = new URLRequest("images/btn_fb.png");
+			btn_postFB.load(urlReq);
+			btn_postFB.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_postFB.width = w * 0.12;
+				btn_postFB.height = h * 0.2;
+
+			});
+			btn_postFB.x = w * 0.45;
+			btn_postFB.y = BUTTONS_POS_Y;	
 			
-			//option button
-			urlReq = new URLRequest("images/button_option.png");
-			button_option.load(urlReq);
-			button_option.x = 420;
-			button_option.y = BUTTONS_POS_Y;	
+			//option btn
+			urlReq = new URLRequest("images/btn_opt.png");
+			btn_option.load(urlReq);
+			btn_option.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_option.width = w * 0.12;
+				btn_option.height = h * 0.2;
+
+			});
+			btn_option.x = w * 0.6;
+
+			btn_option.y = BUTTONS_POS_Y;	
 			
-			//sounds button
-			urlReq = new URLRequest("images/button_sounds.png");
-			button_sounds.load(urlReq);
-			button_sounds.x = 520;
-			button_sounds.y = BUTTONS_POS_Y;	
+			//sounds btn
+			urlReq = new URLRequest("images/btn_snd.png");
+			btn_sounds.load(urlReq);
+			btn_sounds.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				btn_sounds.width = w * 0.12;
+				btn_sounds.height = h * 0.2;
+
+			});
+			btn_sounds.x = w * 0.75;
+			btn_sounds.y = BUTTONS_POS_Y;	
 			
 		}
 		
-		public function update():void{			//add children and eventlisteners
-			Obj.stage.addChild(title_logo);
-			Obj.stage.addChild(button_run);
-			Obj.stage.addChild(button_record);
-			Obj.stage.addChild(button_tweet);
-			Obj.stage.addChild(button_postFB);
-			Obj.stage.addChild(button_option);
-			Obj.stage.addChild(button_sounds);
-			
-			button_run.addEventListener(MouseEvent.CLICK, gameStart);
-			button_record.addEventListener(MouseEvent.CLICK, showRecord);
-			button_tweet.addEventListener(MouseEvent.CLICK, tweet);
-			button_postFB.addEventListener(MouseEvent.CLICK, postFB);
-			button_option.addEventListener(MouseEvent.CLICK, optionMenu);
-			button_sounds.addEventListener(MouseEvent.CLICK, soundsMenu);
-		}
 		
-		private function gameStart(e:Event):Boolean{
+		public function update():Boolean{			//add children and eventlisteners
+			
+			if(!itemIsAdded){
+				Obj.stage.addChild(title_logo);
+				Obj.stage.addChild(btn_run);
+				Obj.stage.addChild(btn_record);
+				Obj.stage.addChild(btn_tweet);
+				Obj.stage.addChild(btn_postFB);
+				Obj.stage.addChild(btn_option);
+				Obj.stage.addChild(btn_sounds);
+				
+				btn_run.addEventListener(MouseEvent.CLICK, gameStart);
+				btn_record.addEventListener(MouseEvent.CLICK, showRecord);
+				btn_tweet.addEventListener(MouseEvent.CLICK, tweet);
+				btn_postFB.addEventListener(MouseEvent.CLICK, postFB);
+				btn_option.addEventListener(MouseEvent.CLICK, optionMenu);
+				btn_sounds.addEventListener(MouseEvent.CLICK, soundsMenu);
+				
+				itemIsAdded = true;
+			}
+			
+			if(readyToRun){
+				Obj.stage.removeChild(title_logo);
+				Obj.stage.removeChild(btn_run);
+				Obj.stage.removeChild(btn_record);
+				Obj.stage.removeChild(btn_tweet);
+				Obj.stage.removeChild(btn_postFB);
+				Obj.stage.removeChild(btn_option);
+				Obj.stage.removeChild(btn_sounds);
+				readyToRun = false;
+				itemIsAdded = false;
+				return false;
+			}
+				return true;
+		}
+	
+		private function gameStart(e:Event):void{
 			trace("gameStart()");
-			return true;
+			readyToRun = true;
 		}
 
 		private function showRecord(e:Event):void{
