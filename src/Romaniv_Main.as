@@ -5,16 +5,16 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
-	import GameScenes.Run;
 	import GameScenes.Menu;
+	import GameScenes.Run;
 	
 	//	import gameObjects.Romaniv;
 	
 	public class Romaniv_Main extends Sprite
 	{
 		//system////
-		private const SCENE:Object = {MENU:0, RUN:1, OPTION:2};
-		private static var current_scene:int;
+		private const SCENE:Object = {MENU:0, RUN:1, OPTION:2, RESULT:3};
+		private static var cur_scene:int;
 		private var h:int;	//screenheight 
 		private var w:int;	//screenWidth 
 		private var margin:int;	//Value between a button and edges
@@ -28,7 +28,7 @@ package
 		public function Romaniv_Main()
 		{
 			super();
-			current_scene = SCENE.MENU;
+			cur_scene = SCENE.MENU;
 			
 			// autoOrients をサポート
 			stage.align = StageAlign.TOP_LEFT;
@@ -43,20 +43,21 @@ package
 			w = stage.fullScreenWidth;
 			margin = h * 0.01;
 			
-			run = new Run(w, h, stage);
+			//scenes
 			menu = new Menu(w, h, stage);
+			run = new Run(w, h, this);
 
-			menu.load();
 			
+			
+			stage.addChild(menu);
 			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		private function onEnterFrame(e:Event):void{
-			switch(current_scene){
+			switch(cur_scene){
 				case SCENE.MENU:
 					if(!menu.update()){
 						switchScene(SCENE.RUN);
-						run.load();
 						stage.addChild(run);
 						stage.removeChild(menu);
 					}					
@@ -64,10 +65,9 @@ package
 				case SCENE.RUN:
 					if(!run.update()){
 						switchScene(SCENE.MENU);
-						menu.load();
 						stage.addChild(menu);
 						stage.removeChild(run);
-					}	
+					}
 					break;
 				case SCENE.RESULT:
 					break;
@@ -76,7 +76,7 @@ package
 			}
 		}
 		private function switchScene(next_scene):void{
-			current_scene = next_scene;
+			cur_scene = next_scene;
 		}
 	}
 }
