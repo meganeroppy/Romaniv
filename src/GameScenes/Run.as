@@ -2,15 +2,14 @@ package GameScenes
 {
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.utils.getTimer;
-	
-	import Romaniv_Main;
-	
+		
 	//	import gameObjects.Romaniv;
 	
 	public class Run extends Sprite
@@ -48,10 +47,12 @@ package GameScenes
 		//Romaniv
 		private var romaniv:Sprite = new Sprite();
 		private var run_pic:Loader = new Loader();
+//		private var run_pic:MovieClip = new anm_run;
 		private var slap_pic:Loader = new Loader();
 		private var jump_pic:Loader = new Loader();
 		private var exp_pic:Loader = new Loader();
 		private var father_pic:Loader = new Loader();
+//		private var cur_pic:Loader = new Loader();
 		private var cur_pic:Loader = new Loader();
 		private const STATUS:Object = {RUN:0, JUMP:1, SLAP:2, DEAD:3, FATHER:4, IDLE:5, END:6};
 		private var cur_status:int;
@@ -64,6 +65,8 @@ package GameScenes
 		private const EXPLODE_DURATION:Number = 1.8;
 		private var attack_area:Sprite = new Sprite();
 		private var scale_rate_romaniv:Number = 0.2;
+		
+		private var test:MovieClip = new anm_run;
 		
 		//hairs
 		private var hair:Loader = new Loader();

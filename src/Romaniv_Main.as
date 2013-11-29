@@ -44,7 +44,7 @@ package
 			margin = h * 0.01;
 			
 			//scenes
-			menu = new Menu(w, h, stage);
+			menu = new Menu(w, h, this);
 			run = new Run(w, h, this);
 
 			
